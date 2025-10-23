@@ -1,0 +1,48 @@
+# Environment variables
+.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*o
+*so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Docker / Volumes (adjust if your volume name is different)
+postgres_data/
+# Or specify the named volume if not using a relative path
+# spot2-challenge_postgres_data/
+
+# IDE / Editor folders
+.idea/
+.vscode/
+*.swp
+*~
+
+# Test data backup files
+test_data/*.bak
+data/*.bak # If you created backups there too
+
+# OS generated files
+.DS_Store
+Thumbs.db
