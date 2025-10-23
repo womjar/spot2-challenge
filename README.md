@@ -1,24 +1,24 @@
 # Proyecto GeoChallenge
 
-[cite_start]Este proyecto implementa una API REST usando Django, GeoDjango, PostgreSQL (PostGIS) y Docker para gestionar y consultar datos geoespaciales ("spots") según los requisitos del desafío [cite: 3-5, 47-53].
+Este proyecto implementa una API REST usando Django, GeoDjango, PostgreSQL (PostGIS) y Docker para gestionar y consultar datos geoespaciales ("spots") según los requisitos del desafío [cite: 3-5, 47-53].
 
 ## Funcionalidades (Etapa 1 & 2 Completadas)
 
 * **Modelo de Datos:** Modelo geoespacial para almacenar información de los spots, incluyendo ubicación (`PointField`) y seguimiento de la fuente de datos.
 * **Carga de Datos:**
-    * [cite_start]Comando Django (`load_spots`) para `lk_spots.csv` [cite: 8, 57-58].
-    * [cite_start]Comando Django (`load_props`) para normalizar y cargar `props_list.json`, incluyendo geocodificación [cite: 41, 59-62].
-* [cite_start]**API REST:** Endpoints para [cite: 10, 16-17]:
-    * [cite_start]Listar/Filtrar/Ordenar/Paginar spots (`GET /api/spots/`) [cite: 19-20, 23-24, 42].
-    * [cite_start]Spots cercanos (`GET /api/spots/nearby/?lat=...`) [cite: 21-22].
-    * [cite_start]Spots dentro de polígono (`POST /api/spots/within/`) [cite: 25-31].
-    * [cite_start]Precio promedio de renta por sector (`GET /api/spots/average-price-by-sector/`) [cite: 32-33].
-    * [cite_start]Detalle de spot (`GET /api/spots/{spot_id}/`) [cite: 34-35].
-    * [cite_start]Ranking por precio de renta (`GET /api/spots/top-rent/?limit=...`) [cite: 36-37].
-* [cite_start]**Documentación de API:** Generación automática de Swagger UI/OpenAPI (`drf-spectacular`)[cite: 45].
-* [cite_start]**Dockerizado:** Configuración completa con Docker y Docker Compose[cite: 53].
-* [cite_start]**Indexación Geoespacial:** Índices espaciales automáticos de PostGIS para consultas eficientes[cite: 44].
-* [cite_start]**Pruebas:** Pruebas de integración para la API y los comandos de carga de datos[cite: 43].
+    * Comando Django (`load_spots`) para `lk_spots.csv` 
+    * Comando Django (`load_props`) para normalizar y cargar `props_list.json`, incluyendo geocodificación 
+* **API REST:** Endpoints para :
+    * Listar/Filtrar/Ordenar/Paginar spots (`GET /api/spots/`) .
+    * Spots cercanos (`GET /api/spots/nearby/?lat=...`) .
+    * Spots dentro de polígono (`POST /api/spots/within/`) .
+    * Precio promedio de renta por sector (`GET /api/spots/average-price-by-sector/`) .
+    * Detalle de spot (`GET /api/spots/{spot_id}/`).
+    * Ranking por precio de renta (`GET /api/spots/top-rent/?limit=...`).
+* **Documentación de API:** Generación automática de Swagger UI/OpenAPI (`drf-spectacular`).
+* **Dockerizado:** Configuración completa con Docker y Docker Compose.
+* **Indexación Geoespacial:** Índices espaciales automáticos de PostGIS para consultas eficientes.
+* **Pruebas:** Pruebas de integración para la API y los comandos de carga de datos.
 
 ---
 
@@ -94,11 +94,11 @@
 ## Detalles de la Carga de Datos
 
 * **`lk_spots.csv` (`load_spots`):**
-    * [cite_start]Lee CSV limpio, convierte tipos, crea geometrías `Point` [cite: 77-78].
+    * Lee CSV limpio, convierte tipos, crea geometrías `Point` .
     * Usa `update_or_create` (basado en `spot_id`) para idempotencia.
     * Marca `data_source='csv'`.
 
-* [cite_start]**`props_list.json` (`load_props`):** [cite: 59-62, 41]
+* **`props_list.json` (`load_props`):** 
     * Lee JSON desnormalizado.
     * **Normalización:**
         * **ID:** Genera `spot_id` secuenciales para registros nuevos.
@@ -117,25 +117,25 @@
 ## Endpoints de la API (Ejemplos)
 
 * **Listar/Filtrar/Ordenar/Paginar Spots:**
-    * [cite_start]`curl http://localhost:8000/api/spots/` [cite: 19-20]
-    * [cite_start]`curl "http://localhost:8000/api/spots/?sector=9&municipality=Tijuana"` [cite: 23-24]
+    * `curl http://localhost:8000/api/spots/` 
+    * `curl "http://localhost:8000/api/spots/?sector=9&municipality=Tijuana"` 
     * `curl "http://localhost:8000/api/spots/?page=2&ordering=-spot_price_total_mxn_rent"`
 * **Spots Cercanos:**
-    * [cite_start]`curl "http://localhost:8000/api/spots/nearby/?lat=19.4326&lng=-99.1332&radius=5000"` (Radio en metros) [cite: 21-22]
+    * `curl "http://localhost:8000/api/spots/nearby/?lat=19.4326&lng=-99.1332&radius=5000"` (Radio en metros) 
 * **Spots Dentro de Polígono:**
-    * [cite_start]`curl -X POST http://localhost:8000/api/spots/within/ -H "Content-Type: application/json" -d '{"polygon": {"type": "Polygon", "coordinates": [[[-99.15, 19.42], [-99.12, 19.42], [-99.12, 19.44], [-99.15, 19.44], [-99.15, 19.42]]]}}'` [cite: 25-31]
+    * `curl -X POST http://localhost:8000/api/spots/within/ -H "Content-Type: application/json" -d '{"polygon": {"type": "Polygon", "coordinates": [[[-99.15, 19.42], [-99.12, 19.42], [-99.12, 19.44], [-99.15, 19.44], [-99.15, 19.42]]]}}'` 
 * **Precio Promedio por Sector:**
-    * [cite_start]`curl http://localhost:8000/api/spots/average-price-by-sector/` [cite: 32-33]
+    * `curl http://localhost:8000/api/spots/average-price-by-sector/` 
 * **Detalle de Spot:**
-    * [cite_start]`curl http://localhost:8000/api/spots/25564/` (Usa un `spot_id` válido) [cite: 34-35]
+    * `curl http://localhost:8000/api/spots/25564/` (Usa un `spot_id` válido)
 * **Top Spots por Renta:**
-    * [cite_start]`curl "http://localhost:8000/api/spots/top-rent/?limit=5"` [cite: 36-37]
+    * `curl "http://localhost:8000/api/spots/top-rent/?limit=5"` 
 * **Documentación API:**
     * Visita `http://localhost:8000/api/docs/` en tu navegador.
 
 ---
 
-## [cite_start]Pruebas (Testing) [cite: 43]
+## Pruebas (Testing) 
 
 El proyecto incluye pruebas de integración para verificar la funcionalidad de la API y la lógica de los comandos de carga de datos.
 
@@ -174,9 +174,6 @@ El proyecto incluye pruebas de integración para verificar la funcionalidad de l
 
 ---
 
-## Próximos Pasos
+## Utilizacion de IA
 
-* **Refinar Normalización:** Mejorar análisis de direcciones en `load_props.py`. Considerar mapear `property_type` o añadir más campos.
-* **Filtros/Ordenamiento Avanzados:** Implementar filtros más complejos (rangos, etc.).
-* **Testing:** Incrementar la cobertura de pruebas.
-* **Documentación:** Mejorar docstrings para Swagger.
+* Durante el desarrollo del ejercicio utilice Gemini 2.5 para generar la normalizacion del archivo props_list.json, la generacion de los tests y la generacion del presente README.
